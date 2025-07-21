@@ -23,11 +23,22 @@
   </div>
 
   <!-- MUSIK -->
-  <div class="section">
-    <h2>🎵 Musik</h2>
-    <button onclick="playMusic()">Afspil YouTube Music</button>
-    <div id="nowPlaying"></div>
+  <div class="section music-player">
+  <div class="player-ui">
+    <div id="controls">
+      <button onclick="prevSong()">⏮</button>
+      <button onclick="playPause()">▶️</button>
+      <button onclick="nextSong()">⏭</button>
+      <div id="songTitle">Ingen sang valgt</div>
+    </div>
+
+    <div class="playlist">
+      <h3>🎶 Min Playliste</h3>
+      <ul id="playlistList"></ul>
+    </div>
   </div>
+</div>
+
 
   <!-- NOTER -->
   <div class="section">
