@@ -1,23 +1,50 @@
-// Ugeopdatering
-const today = new Date();
-const oneJan = new Date(today.getFullYear(), 0, 1);
-const weekNumber = Math.ceil((((today - oneJan) / 86400000) + oneJan.getDay() + 1) / 7);
-document.getElementById("weekTitle").textContent = "UGE " + weekNumber;
+// Funktion til at vise ugenummer i toppen
+function updateWeekNumber() {
+  const now = new Date();
+  const weekNumber = getWeekNumber(now);
+  document.getElementById("weekTitle").textContent = `UGE ${weekNumber}`;
+}
 
-// Live vejr (Open-Meteo API)
-fetch("https://api.open-meteo.com/v1/forecast?latitude=55.25&longitude=10.22&current=temperature_2m,weather_code&timezone=auto")
-  .then(res => res.json())
-  .then(data => {
-    const temp = Math.round(data.current.temperature_2m);
-    const code = data.current.weather_code;
-    let emoji = "☁️";
+// Udregn ISO 8601 ugenummer
+function getWeekNumber(d) {
+  d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const weekNo = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+  return weekNo;
+}
 
-    if (code === 0) emoji = "☀️";
-    else if ([1, 2, 3].includes(code)) emoji = "🌤️";
-    else if ([45, 48].includes(code)) emoji = "🌫️";
-    else if ([51, 53, 55, 56, 57, 61, 63, 65].includes(code)) emoji = "🌧️";
-    else if ([80, 81, 82].includes(code)) emoji = "🌦️";
-    else if ([95, 96, 99].includes(code)) emoji = "⛈️";
+// Funktion til at hente og vise vejret
+function updateWeather() {
+  // Odense koordinater (ændr evt.)
+  const lat = 55.3959;
+  const lon = 10.3883;
 
-    document.getElementById("weather").textContent = `${emoji} ${temp}°C`;
-  });
+  fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=auto`)
+    .then(res => res.json())
+    .then(data => {
+      const temp = Math.round(data.current.temperature_2m);
+      const code = data.current.weather_code;
+      const emoji = weatherCodeToEmoji(code);
+      document.getElementById("weather").textContent = `${emoji} ${temp}°C`;
+    })
+    .catch(() => {
+      document.getElementById("weather").textContent = "🌤️ Vejrdata ikke tilgængelig";
+    });
+}
+
+// En meget simpel konvertering fra weather_code til emoji
+function weatherCodeToEmoji(code) {
+  if ([0, 1].includes(code)) return "☀️";
+  if ([2].includes(code)) return "⛅";
+  if ([3].includes(code)) return "☁️";
+  if ([45, 48].includes(code)) return "🌫️";
+  if ([51, 53, 55, 56, 57, 61, 63, 65, 80, 81, 82].includes(code)) return "🌧️";
+  if ([66, 67, 71, 73, 75, 77, 85, 86].includes(code)) return "❄️";
+  if ([95, 96, 99].includes(code)) return "⛈️";
+  return "🌈";
+}
+
+updateWeekNumber();
+updateWeather();
