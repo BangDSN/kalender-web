@@ -1,93 +1,117 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kalender og Musik</title>
+  <meta charset="UTF-8">
+  <title>Kalender Oversigt</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #f3f3f3;
+      background-color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      width: 100%;
       padding: 10px 20px;
-      background-color: #ffffff;
-      border-bottom: 1px solid #ddd;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       font-weight: bold;
     }
 
-    #week-title {
-      font-size: 28px;
+    .main-title {
+      text-align: center;
+      margin: 10px;
+      font-size: 24px;
     }
 
-    main {
-      padding: 20px;
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 95%;
     }
 
-    .calendar-section {
+    .calendar {
       width: 100%;
+      max-height: 600px;
       margin-bottom: 20px;
     }
 
-    .calendar-frame {
-      width: 100%;
-      height: 350px;
-      border: none;
-    }
-
-    .music-section {
+    .bottom-section {
       display: flex;
+      justify-content: space-between;
+      width: 100%;
       gap: 20px;
-      flex-wrap: wrap;
     }
 
-    .music-player {
+    .music-player, .photo-album {
+      background-color: white;
+      padding: 10px;
       flex: 1;
-      min-width: 350px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-radius: 10px;
     }
 
-    .music-frame {
-      width: 25%;
+    iframe {
+      width: 100%;
       height: 315px;
+      border: none;
+      border-radius: 8px;
+    }
+
+    .photo-album iframe {
+      height: 320px;
+    }
+
+    @media (max-width: 900px) {
+      .bottom-section {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <div>🌤️ <span id="weather">Live vejr i Tommerup</span></div>
-    <h1 id="week-title">UGE XX</h1>
+    <div>🌦️ 21°C – regn</div>
+    <div>UGE <span id="weekNumber">...</span></div>
     <div></div>
   </header>
 
-  <main>
-    <section class="calendar-section">
-      <iframe 
-        class="calendar-frame" 
-        src="https://calendar.google.com/calendar/embed?src=family16092035733849495810%40group.calendar.google.com&ctz=Europe%2FCopenhagen" 
-        frameborder="0"
-        scrolling="no">
-      </iframe>
-    </section>
+  <div class="content">
+    <div class="calendar">
+      <iframe src="https://calendar.google.com/calendar/embed?src=family16092035733849495810%40group.calendar.google.com&ctz=Europe%2FCopenhagen&mode=WEEK"
+              style="border: 0;" frameborder="0" scrolling="no"></iframe>
+    </div>
 
-    <section class="music-section">
+    <div class="bottom-section">
       <div class="music-player">
-        <h2>🎵 Din YouTube Music Playliste</h2>
-        <iframe 
-          class="music-frame"
-          src="https://www.youtube.com/embed/videoseries?list=PLBDRwaq9Fd4T3NHdsG-X3MG4MR-bwp69I" 
-          frameborder="0" 
-          allow="autoplay; encrypted-media" 
-          allowfullscreen>
-        </iframe>
+        <h3>🎵 Din YouTube Music Playliste</h3>
+        <iframe src="https://www.youtube.com/embed/videoseries?list=PLBDRwaq9Fd4T3NHdsG-X3MG4MR-bwp69I"
+                allow="autoplay; encrypted-media" allowfullscreen></iframe>
       </div>
-    </section>
-  </main>
 
-  <script src="script.js"></script>
+      <div class="photo-album">
+        <h3>📷 Google Fotos Album</h3>
+        <iframe src="https://photos.app.goo.gl/KkeszbMu4DNZHJzY8"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function getWeekNumber(d) {
+      d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+      d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+      const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+      const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+      return weekNo;
+    }
+
+    document.getElementById("weekNumber").textContent = getWeekNumber(new Date());
+  </script>
 </body>
 </html>
