@@ -1,22 +1,23 @@
-// Uge nummer
-const weekTitle = document.getElementById("week-title");
+// Ugeopdatering
 const today = new Date();
-const firstJan = new Date(today.getFullYear(), 0, 1);
-const pastDays = Math.floor((today - firstJan) / (24 * 60 * 60 * 1000));
-const weekNumber = Math.ceil((pastDays + firstJan.getDay() + 1) / 7);
-weekTitle.textContent = "UGE " + weekNumber;
+const oneJan = new Date(today.getFullYear(), 0, 1);
+const weekNumber = Math.ceil((((today - oneJan) / 86400000) + oneJan.getDay() + 1) / 7);
+document.getElementById("weekTitle").textContent = "UGE " + weekNumber;
 
-// 🌤 VEJR fra OpenWeather
-const apiKey = "01e3f88279e07efcea3aa9168032f379"; // ← din API-nøgle
-const city = "Tommerup";
-
-fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},DK&appid=${apiKey}&units=metric&lang=da`)
-  .then(response => response.json())
+// Live vejr (Open-Meteo API)
+fetch("https://api.open-meteo.com/v1/forecast?latitude=55.25&longitude=10.22&current=temperature_2m,weather_code&timezone=auto")
+  .then(res => res.json())
   .then(data => {
-    const temp = Math.round(data.main.temp);
-    const desc = data.weather[0].description;
-    document.getElementById("weather").textContent = ` ${temp}°C – ${desc}`;
-  })
-  .catch(() => {
-    document.getElementById("weather").textContent = "⚠️ Vejrdata ikke tilgængelig";
+    const temp = Math.round(data.current.temperature_2m);
+    const code = data.current.weather_code;
+    let emoji = "☁️";
+
+    if (code === 0) emoji = "☀️";
+    else if ([1, 2, 3].includes(code)) emoji = "🌤️";
+    else if ([45, 48].includes(code)) emoji = "🌫️";
+    else if ([51, 53, 55, 56, 57, 61, 63, 65].includes(code)) emoji = "🌧️";
+    else if ([80, 81, 82].includes(code)) emoji = "🌦️";
+    else if ([95, 96, 99].includes(code)) emoji = "⛈️";
+
+    document.getElementById("weather").textContent = `${emoji} ${temp}°C`;
   });
