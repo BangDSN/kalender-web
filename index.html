@@ -3,25 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kalender & Musik</title>
+  <title>Kalender Dashboard</title>
   <style>
     body {
       margin: 0;
       font-family: sans-serif;
-      background-color: #f4f4f4;
+      background-color: #f5f5f5;
+    }
+
+    header {
       display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
-    h1 {
-      text-align: center;
-      margin-top: 20px;
+    .weather {
+      font-size: 1.1rem;
+      font-weight: bold;
     }
 
-    .calendar {
+    #weekTitle {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .calendar-container {
       width: 100%;
-      height: 600px;
+      height: 520px;
       border: none;
     }
 
@@ -33,57 +44,53 @@
       justify-content: space-between;
     }
 
-    .music-player, .photo-slideshow {
+    .card {
       flex: 1;
       min-width: 300px;
       background: white;
       border-radius: 10px;
-      padding: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    .photo-slideshow {
-      max-width: 300px;
+      padding: 10px 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
     iframe {
+      width: 100%;
       border: none;
     }
   </style>
 </head>
 <body>
 
-  <h1 id="weekTitle">UGE ...</h1>
+  <header>
+    <div class="weather" id="weather">🌤️ Henter vejr...</div>
+    <div id="weekTitle">UGE ...</div>
+  </header>
 
-  <!-- Google Kalender -->
-  <iframe
-    class="calendar"
-    src="https://calendar.google.com/calendar/embed?src=family16092035733849495810%40group.calendar.google.com&ctz=Europe%2FCopenhagen">
+  <!-- Kalender -->
+  <iframe class="calendar-container"
+    src="https://calendar.google.com/calendar/embed?src=family16092035733849495810%40group.calendar.google.com&ctz=Europe%2FCopenhagen&mode=week">
   </iframe>
 
   <div class="bottom-section">
-
     <!-- YouTube Music -->
-    <div class="music-player">
+    <div class="card">
       <h3>🎵 YouTube Music</h3>
-      <iframe width="25%" height="180"
+      <iframe height="180"
         src="https://www.youtube.com/embed?listType=playlist&list=PLBDRwaq9Fd4T3NHdsG-X3MG4MR-bwp69I"
         allow="autoplay; encrypted-media" allowfullscreen>
       </iframe>
     </div>
 
     <!-- Imgur Slideshow -->
-    <div class="photo-slideshow">
+    <div class="card">
       <h3>📷 Slideshow</h3>
       <blockquote class="imgur-embed-pub" lang="en" data-id="a/sYGu7Ox">
-        <a href="//imgur.com/a/sYGu7Ox">Se albummet</a>
+        <a href="https://imgur.com/a/sYGu7Ox">Se album</a>
       </blockquote>
       <script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
     </div>
-
   </div>
 
   <script src="script.js"></script>
-
 </body>
 </html>
