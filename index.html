@@ -2,61 +2,99 @@
 <html lang="da">
 <head>
   <meta charset="UTF-8">
-  <title>UGE 25 Kalender</title>
+  <title>UGE</title>
   <script defer src="script.js"></script>
   <style>
     body { font-family: sans-serif; padding: 20px; text-align: center; background: #f2f2f2; }
-    .section { margin: 30px auto; max-width: 800px; }
-    button, select, textarea { font-size: 16px; margin-top: 10px; }
-    textarea { width: 100%; height: 100px; margin-top: 10px; }
+    .section { margin: 30px auto; max-width: 900px; }
     iframe { width: 100%; height: 600px; border: none; margin-top: 20px; }
+
+    /* Musik UI */
+    .music-player {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    #controls {
+      background: #fff;
+      padding: 10px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      text-align: center;
+      min-width: 200px;
+    }
+
+    #controls button {
+      font-size: 20px;
+      margin: 0 10px;
+    }
+
+    #songTitle {
+      margin-top: 8px;
+      font-size: 16px;
+      color: #444;
+    }
+
+    .playlist {
+      background: #fff;
+      padding: 10px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .playlist ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .playlist li {
+      padding: 6px 10px;
+      cursor: pointer;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    .playlist li:hover {
+      background: #f0f0f0;
+    }
+
+    .playlist li.active {
+      background-color: #ddd;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
 
   <h1 id="weekTitle">UGE</h1>
 
-  <!-- VEJR -->
   <div class="section">
     <h2>🌤 Live vejr i Tommerup</h2>
     <div id="weather">Henter vejrdata...</div>
   </div>
 
-  <!-- MUSIK -->
-  <div class="section music-player">
-  <div class="player-ui">
-    <div id="controls">
-      <button onclick="prevSong()">⏮</button>
-      <button onclick="playPause()">▶️</button>
-      <button onclick="nextSong()">⏭</button>
-      <div id="songTitle">Ingen sang valgt</div>
-    </div>
-
-    <div class="playlist">
-      <h3>🎶 Min Playliste</h3>
-      <ul id="playlistList"></ul>
-    </div>
-  </div>
-</div>
-
-
-  <!-- NOTER -->
   <div class="section">
-    <h2>📝 Noter</h2>
-    <select id="daySelect">
-      <option value="Mandag">Mandag</option>
-      <option value="Tirsdag">Tirsdag</option>
-      <option value="Onsdag">Onsdag</option>
-      <option value="Torsdag">Torsdag</option>
-      <option value="Fredag">Fredag</option>
-      <option value="Lørdag">Lørdag</option>
-      <option value="Søndag">Søndag</option>
-    </select><br>
-    <textarea id="noteText" placeholder="Skriv din note her..."></textarea><br>
-    <button onclick="saveNote()">💾 Gem note</button>
+    <h2>🎵 Musik</h2>
+    <div class="music-player">
+      <div id="controls">
+        <button onclick="prevSong()">⏮</button>
+        <button onclick="playPause()">▶️</button>
+        <button onclick="nextSong()">⏭</button>
+        <div id="songTitle">Ingen sang valgt</div>
+      </div>
+      <div class="playlist">
+        <h3>🎶 Min Playliste</h3>
+        <ul id="playlistList"></ul>
+      </div>
+    </div>
   </div>
 
-  <!-- GOOGLE KALENDER -->
   <div class="section">
     <h2>📅 Kalender</h2>
     <iframe src="https://calendar.google.com/calendar/embed?src=family16092035733849495810%40group.calendar.google.com&ctz=Europe%2FCopenhagen"></iframe>
