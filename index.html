@@ -1,117 +1,89 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-  <meta charset="UTF-8">
-  <title>Kalender Oversigt</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kalender & Musik</title>
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: sans-serif;
       background-color: #f4f4f4;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      min-height: 100vh;
     }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      padding: 10px 20px;
-      background-color: white;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      font-weight: bold;
-    }
-
-    .main-title {
+    h1 {
       text-align: center;
-      margin: 10px;
-      font-size: 24px;
-    }
-
-    .content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 95%;
+      margin-top: 20px;
     }
 
     .calendar {
       width: 100%;
-      max-height: 600px;
-      margin-bottom: 20px;
+      height: 600px;
+      border: none;
     }
 
     .bottom-section {
       display: flex;
-      justify-content: space-between;
-      width: 100%;
+      flex-wrap: wrap;
       gap: 20px;
+      padding: 20px;
+      justify-content: space-between;
     }
 
-    .music-player, .photo-album {
-      background-color: white;
-      padding: 10px;
+    .music-player, .photo-slideshow {
       flex: 1;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      min-width: 300px;
+      background: white;
       border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .photo-slideshow {
+      max-width: 500px;
     }
 
     iframe {
-      width: 100%;
-      height: 315px;
       border: none;
-      border-radius: 8px;
-    }
-
-    .photo-album iframe {
-      height: 320px;
-    }
-
-    @media (max-width: 900px) {
-      .bottom-section {
-        flex-direction: column;
-      }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div>🌦️ 21°C – regn</div>
-    <div>UGE <span id="weekNumber">...</span></div>
-    <div></div>
-  </header>
 
-  <div class="content">
-    <div class="calendar">
-      <iframe src="https://calendar.google.com/calendar/embed?src=family16092035733849495810%40group.calendar.google.com&ctz=Europe%2FCopenhagen&mode=WEEK"
-              style="border: 0;" frameborder="0" scrolling="no"></iframe>
+  <h1 id="weekTitle">UGE ...</h1>
+
+  <!-- Google Kalender -->
+  <iframe
+    class="calendar"
+    src="https://calendar.google.com/calendar/embed?src=family16092035733849495810%40group.calendar.google.com&ctz=Europe%2FCopenhagen">
+  </iframe>
+
+  <div class="bottom-section">
+
+    <!-- YouTube Music -->
+    <div class="music-player">
+      <h3>🎵 YouTube Music</h3>
+      <iframe width="100%" height="180"
+        src="https://www.youtube.com/embed?listType=playlist&list=PLBDRwaq9Fd4T3NHdsG-X3MG4MR-bwp69I"
+        allow="autoplay; encrypted-media" allowfullscreen>
+      </iframe>
     </div>
 
-    <div class="bottom-section">
-      <div class="music-player">
-        <h3>YouTube Music</h3>
-        <iframe src="https://www.youtube.com/embed/videoseries?list=PLBDRwaq9Fd4T3NHdsG-X3MG4MR-bwp69I"
-                allow="autoplay; encrypted-media" allowfullscreen></iframe>
-      </div>
-
-      <div class="photo-album">
-        <h3>Google Fotos Album</h3>
-        <iframe src="<blockquote class="imgur-embed-pub" lang="en" data-id="a/sYGu7Ox"  ><a href="//imgur.com/a/sYGu7Ox">billeder</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>"></iframe>
-      </div>
+    <!-- Imgur Slideshow -->
+    <div class="photo-slideshow">
+      <h3>📷 Slideshow</h3>
+      <blockquote class="imgur-embed-pub" lang="en" data-id="a/sYGu7Ox">
+        <a href="//imgur.com/a/sYGu7Ox">Se albummet</a>
+      </blockquote>
+      <script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
     </div>
+
   </div>
 
-  <script>
-    function getWeekNumber(d) {
-      d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-      d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
-      const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-      const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-      return weekNo;
-    }
+  <script src="script.js"></script>
 
-    document.getElementById("weekNumber").textContent = getWeekNumber(new Date());
-  </script>
 </body>
 </html>
