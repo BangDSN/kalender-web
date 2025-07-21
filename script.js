@@ -15,7 +15,7 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},DK&appid=${apiK
   .then(data => {
     const temp = Math.round(data.main.temp);
     const desc = data.weather[0].description;
-    document.getElementById("weather").textContent = `🌡️ ${temp}°C – ${desc}`;
+    document.getElementById("weather").textContent = ` ${temp}°C – ${desc}`;
   })
   .catch(() => {
     document.getElementById("weather").textContent = "⚠️ Vejrdata ikke tilgængelig";
