@@ -1,38 +1,34 @@
-// Slideshow
+const imageFolder = "images/";
 const imageList = [
-  "images/IMG_0602.jpg",
-  "images/IMG_0968.HEIC",
-  "images/IMG_1089.JPG",
-  "images/IMG_1178.JPG",
-  "images/IMG_1340.HEIC",
-  "images/IMG_1354.HEIC",
-  "images/IMG_4122.JPG",
-  "images/IMG_4135.JPG",
-  "images/IMG_4246.JPG",
-  "images/IMG_4253.JPG",
-  "images/IMG_4270.JPG",
-  "images/IMG_4293.JPG",
-  "images/IMG_4339.JPG",
-  "images/IMG_4431.JPG",
-  "images/IMG_4449.JPG",
-  "images/IMG_4614.JPG",
-  "images/IMG_4712.JPG",
-  "images/IMG_4731.JPG",
-  "images/IMG_4733.JPG",
-  "images/IMG_4737.JPG",
-  "images/IMG_4852.JPG"
+  "IMG_0602.jpg",
+  "IMG_1089.JPG",
+  "IMG_1178.JPG",
+  "IMG_1340.HEIC",
+  "IMG_1354.HEIC",
+  "IMG_4122.JPG",
+  "IMG_4135.JPG",
+  "IMG_4246.JPG",
+  "IMG_4253.JPG",
+  "IMG_4270.JPG",
+  "IMG_4293.JPG",
+  "IMG_4339.JPG",
+  "IMG_4431.JPG",
+  "IMG_4449.JPG",
+  "IMG_4614.JPG",
+  "IMG_4712.JPG",
+  "IMG_4731.JPG",
+  "IMG_4733.JPG",
+  "IMG_4737.JPG",
+  "IMG_4852.JPG"
 ];
 
-let currentIndex = 0;
-const slideshow = document.getElementById("slideshow");
+let currentImage = 0;
+const imgElement = document.getElementById("slideshow-img");
 
 function showNextImage() {
-  currentIndex = (currentIndex + 1) % imageList.length;
-  slideshow.style.opacity = 0;
-  setTimeout(() => {
-    slideshow.src = imageList[currentIndex];
-    slideshow.style.opacity = 1;
-  }, 500);
+  imgElement.src = imageFolder + imageList[currentImage];
+  currentImage = (currentImage + 1) % imageList.length;
 }
 
-setInterval(showNextImage, 7000); // Skift hver 7. sekund
+showNextImage(); // Start with first image
+setInterval(showNextImage, 7000); // Switch every 7 seconds
