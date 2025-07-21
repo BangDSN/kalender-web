@@ -1,5 +1,5 @@
 // 🌤 HENT LIVE VEJR
-const apiKey = "DIN_API_KEY_HER"; // ← ERSTAT MED DIN EGEN fra openweathermap.org
+const apiKey = "01e3f88279e07efcea3aa9168032f379"; // fra openweathermap.org
 const city = "Tommerup";
 const weatherDiv = document.getElementById("weather");
 
