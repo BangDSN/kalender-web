@@ -3,6 +3,28 @@ const apiKey = "01e3f88279e07efcea3aa9168032f379"; // fra openweathermap.org
 const city = "Tommerup";
 const weatherDiv = document.getElementById("weather");
 
+// 📅 Automatisk uge-nummer
+function getCurrentWeekNumber() {
+  const now = new Date();
+  const firstDayOfYear = new Date(now.getFullYear(), 0, 1);
+  const pastDaysOfYear = (now - firstDayOfYear) / 86400000;
+  const weekNumber = Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+  return weekNumber;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const weekTitle = document.getElementById("weekTitle");
+  if (weekTitle) {
+    const uge = getCurrentWeekNumber();
+    weekTitle.textContent = "UGE " + uge;
+  }
+
+  // 👇 flyt evt. eksisterende kode herind (fx note loader)
+  const note = localStorage.getItem(daySelect.value) || "";
+  noteText.value = note;
+});
+
+
 fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=da`)
   .then(response => response.json())
   .then(data => {
