@@ -4,7 +4,60 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kalenderoversigt</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background: white;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .weather {
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+
+    .week-title {
+      font-size: 2em;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 20px;
+    }
+
+    iframe {
+      border: none;
+    }
+
+    .calendar {
+      flex: 1 1 700px;
+      min-width: 300px;
+      height: 500px;
+      margin: 10px;
+    }
+
+    .music {
+      flex: 1 1 500px;
+      min-width: 300px;
+      margin: 10px;
+      background: white;
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+  </style>
 </head>
 <body>
 
